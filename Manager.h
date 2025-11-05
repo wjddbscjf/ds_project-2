@@ -2,6 +2,8 @@
 #include "SelectionTree.h"
 #include "BpTree.h"
 #include <fstream>
+#include <sstream>
+
 
 class Manager {
 private:
