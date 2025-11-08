@@ -6,11 +6,11 @@ bool BpTree::Insert(EmployeeData *newData)
     // newData need to be root node
     {
         BpTreeDataNode *data = new BpTreeDataNode();
-        data->insertDataMap(newData->getName(), newData);
+        data->insertDataMap(newData->getName(), newData); // insert data
         root = data;
         return true;
     }
-    BpTreeNode *cur = root;
+    BpTreeNode *cur = root;                                    // for travelsal
     while (cur->getIndexMap() && !cur->getIndexMap()->empty()) // searching adequete inserting position
     {
         auto index = cur->getIndexMap();
@@ -22,6 +22,7 @@ bool BpTree::Insert(EmployeeData *newData)
             {
                 if (iter != index->begin())
                 {
+                    // travel node
                     auto prev = iter;
                     --prev;
                     cur = prev->second;
@@ -30,21 +31,21 @@ bool BpTree::Insert(EmployeeData *newData)
                 {
                     cur = cur->getMostLeftChild();
                 }
-                moved = true;
+                moved = true; // Indicates moved using moved
                 break;
             }
-            ++iter;
+            ++iter; // travelsal
         }
         if (!moved)
         {
-            --iter;
-            cur = iter->second;
+            --iter;             // Because iter points to end
+            cur = iter->second; // travelsal nodes
         }
     }
     cur->insertDataMap(newData->getName(), newData);
 
-    if (excessDataNode(cur))
-        splitDataNode(cur);
+    if (excessDataNode(cur)) // don't meet the conditions of the B+ tree
+        splitDataNode(cur);  // B+Tree rearrangement
 
     return true;
 }
@@ -273,6 +274,11 @@ void BpTree::searchRange(string start, string end)
                 auto data = iter->second;
                 cout << data->getName() << "/" << data->getDeptNo() << "/" << data->getID() << "/" << data->getIncome() << endl;
             }
+            else if (key[0] == end[0])
+            {
+                auto data = iter->second;
+                cout << data->getName() << "/" << data->getDeptNo() << "/" << data->getID() << "/" << data->getIncome() << endl;
+            }
             else if (key > end)
             {
                 // output end
@@ -364,7 +370,7 @@ void BpTree::print()
             {
                 auto info = iter->second;
                 // output
-                cout << info->getName() << "/" << info->getDeptNo() << "/" << info->getID() << info->getIncome() << endl;
+                cout << info->getName() << "/" << info->getDeptNo() << "/" << info->getID() << "/" << info->getIncome() << endl;
                 ++iter; // travelsal in node
             }
         }

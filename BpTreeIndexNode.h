@@ -14,6 +14,7 @@ public:
 	BpTreeIndexNode() {}
 	~BpTreeIndexNode()
 	{
+		mapIndex.clear();
 	}
 
 	void insertIndexMap(string name, BpTreeNode *pN)

@@ -78,7 +78,6 @@ void Manager::run(const char *command)
 	string line;
 	while (getline(fin, line))
 	{
-		cout << line << endl;
 		if (!line.empty() && line.back() == '\r')
 			line.pop_back();
 		Command c;

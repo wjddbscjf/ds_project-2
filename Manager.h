@@ -22,7 +22,19 @@ public:
 	}
 
 	~Manager()
-	{ // destructor
+	{
+		if (bptree)
+		{
+			delete bptree;
+			bptree = nullptr;
+		}
+		if (stree)
+		{
+			delete stree;
+			stree = nullptr;
+		}
+		if (flog.is_open())
+			flog.close();
 	}
 
 	ifstream fin;

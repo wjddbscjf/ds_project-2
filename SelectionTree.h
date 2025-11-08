@@ -21,6 +21,19 @@ public:
 
     ~SelectionTree()
     {
+
+        for (int i = 0; i < 8; i++)
+        {
+            delete run[i];
+            run[i] = nullptr;
+        }
+        for (int i = 1; i < 16; i++)
+        {
+            delete nodes[i];
+            nodes[i] = nullptr;
+        }
+        root = nullptr;
+        fout = nullptr;
     }
 
     void setRoot(SelectionTreeNode *pN) { this->root = pN; }

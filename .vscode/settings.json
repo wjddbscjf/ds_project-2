@@ -12,6 +12,7 @@
         "algorithm": "cpp",
         "xstring": "cpp",
         "ios": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "queue": "cpp"
     }
 }
