@@ -13,14 +13,15 @@ private:
 	int	order;		// m children
 
 public:
-	BpTree(ofstream *fout, int order = 3) {
-		
+	BpTree(ofstream *fout, int order) {
+		root=nullptr;
 	}
 	
 	~BpTree() {
 
 	}
-
+	void		print();
+	EmployeeData**	searchDept_no(int dept_no);
 	/* essential */
 	bool		Insert(EmployeeData* newData);
 	bool		excessDataNode(BpTreeNode* pDataNode);

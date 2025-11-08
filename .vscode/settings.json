@@ -4,6 +4,12 @@
         "xtree": "cpp",
         "iterator": "cpp",
         "xmemory": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "iostream": "cpp",
+        "map": "cpp",
+        "iosfwd": "cpp",
+        "vector": "cpp",
+        "algorithm": "cpp",
+        "xstring": "cpp"
     }
 }
