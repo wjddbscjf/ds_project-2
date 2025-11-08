@@ -16,7 +16,7 @@ EmployeeData *EmployeeHeap::Top()
     if (IsEmpty())
         return nullptr;
     else
-        return heapArr[1];
+        return heapArr[1]; // return maximum value
 }
 
 void EmployeeHeap::Delete()
@@ -24,7 +24,7 @@ void EmployeeHeap::Delete()
     if (IsEmpty())
         return;
     heapArr[1] = heapArr[datanum--];
-    DownHeap(1);
+    DownHeap(1); // from root to leaf rearrangement
 }
 
 bool EmployeeHeap::IsEmpty()
@@ -80,11 +80,12 @@ void EmployeeHeap::DownHeap(int index)
 
 void EmployeeHeap::ResizeArray()
 {
+    // A function that doubles the existing capacity
     maxCapacity *= 2;
     EmployeeData **newArr = new EmployeeData *[maxCapacity + 1];
     for (int i = 1; i <= datanum; i++)
-        newArr[i] = heapArr[i];
+        newArr[i] = heapArr[i]; // pasting
 
-    delete[] heapArr;
+    delete[] heapArr; // delete before doubling capacity
     heapArr = newArr;
 }

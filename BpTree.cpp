@@ -173,22 +173,23 @@ BpTreeNode *BpTree::searchDataNode(string name)
         bool moved = false;
         while (iter != index->end()) // map data travelsal
         {
-            if (name == iter->first)
+            if (name == iter->first) // if target name is matched
             {
                 cur = iter->second;
                 moved = true;
-                break;
+                break; // Escape the repeat statement
             }
-            else if (name < iter->first)
+            else if (name < iter->first) // targer name < cur->name
             {
                 if (iter != index->begin())
                 {
                     auto prev = iter;
-                    --prev;
-                    cur = prev->second;
+                    --prev;             // cur will move to the node indicated by the previous value
+                    cur = prev->second; // move
                 }
                 else
                 {
+                    //
                     cur = cur->getMostLeftChild();
                 }
                 moved = true;
@@ -208,19 +209,19 @@ BpTreeNode *BpTree::searchDataNode(string name)
     {
         auto it = data->find(name);
         if (it != data->end())
-            return cur; // 해당 데이터가 있는 노드 반환
+            return cur; // Return the node with that data
     }
     return nullptr;
 }
 
 void BpTree::searchRange(string start, string end)
 {
-    if (!root)
+    if (!root) // if root is nullptr
         return;
 
     BpTreeNode *cur = root;
 
-    // start 이상인 첫 번째 데이터 노드로 이동
+    // Until node's ket value is above start
     while (cur->getIndexMap() && !cur->getIndexMap()->empty())
     {
         auto index = cur->getIndexMap();
@@ -231,8 +232,7 @@ void BpTree::searchRange(string start, string end)
         {
             if (start < iter->first)
             {
-                // start보다 작으면 왼쪽으로,
-                // 크거나 같으면 해당 자식으로 이동
+                // travelsal
                 if (iter != index->begin())
                 {
                     auto prev = iter;
@@ -241,14 +241,12 @@ void BpTree::searchRange(string start, string end)
                 }
                 else
                     cur = cur->getMostLeftChild();
-
-                moved = true;
+                moved = true; // data matched
                 break;
             }
             ++iter;
         }
-
-        // 마지막까지 갔으면 맨 마지막 자식으로
+        // if( data is not matched )
         if (!moved)
         {
             --iter;
@@ -256,13 +254,11 @@ void BpTree::searchRange(string start, string end)
         }
     }
 
-    // 현재 cur은 start 이상인 첫 리프 노드 근처일 것
-    bool found = false;
-
-    //  pNext 포인터 따라가며 end 이하 출력
+    bool found = false; // setting for output "=======SEARCH_BP=======" once
     while (cur)
     {
         auto dataMap = cur->getDataMap();
+        // travelsal
         for (auto iter = dataMap->begin(); iter != dataMap->end(); ++iter)
         {
             string key = iter->first;
@@ -270,6 +266,7 @@ void BpTree::searchRange(string start, string end)
             {
                 if (found == false)
                 {
+                    // data found
                     cout << "=======SEARCH_BP=======" << endl;
                     found = true;
                 }
@@ -278,13 +275,14 @@ void BpTree::searchRange(string start, string end)
             }
             else if (key > end)
             {
-                cout << "=======================\n\n" ;
+                // output end
+                cout << "=======================\n\n";
                 return;
             }
         }
-        cur = cur->getNext();
+        cur = cur->getNext(); // travelsal
     }
-
+    // if (start< data < end) is false
     if (!found)
     {
         cout << "========ERROR========" << endl;
@@ -309,65 +307,67 @@ EmployeeData **BpTree::searchDept_no(int dept_no)
         auto data = cur->getDataMap();
         if (data != nullptr && !data->empty())
         {
+            // travelsal
             auto iter = data->begin();
             while (iter != data->end())
             {
                 if (iter->second != nullptr && iter->second->getDeptNo() == dept_no)
-                    ++cnt;
-                ++iter;
+                    ++cnt; // Counting the number of employees with dept_no
+                ++iter;    // for travelsal in node
             }
         }
-        cur = cur->getNext();
+        cur = cur->getNext(); // travelsal
     }
-    sendData = new EmployeeData *[cnt + 1];
+    sendData = new EmployeeData *[cnt + 1]; // the data to be returned.
     int idx = 0;
 
     while (node != nullptr)
     {
         auto datamap = node->getDataMap();
-        if (datamap != nullptr && !datamap->empty())
+        if (datamap != nullptr && !datamap->empty()) // travelsal
         {
             auto iter = datamap->begin();
             while (iter != datamap->end())
             {
-                EmployeeData *src = iter->second;
+                EmployeeData *src = iter->second; // Declaration for Readability
                 if (src != nullptr && src->getDeptNo() == dept_no)
                 {
                     EmployeeData *copy = new EmployeeData();
+                    // data paste
                     copy->setData(src->getName(), src->getDeptNo(), src->getID(), src->getIncome());
                     sendData[idx] = copy;
-                    ++idx;
+                    ++idx; // sendData's index value ++
                 }
-                ++iter;
+                ++iter; // travelsal in node
             }
         }
-        node = node->getNext();
+        node = node->getNext(); // travelsal
     }
-    sendData[idx] = nullptr;
-    return sendData;
+    sendData[idx] = nullptr; // setting nullptr
+    return sendData;         // return
 }
 void BpTree::print()
 {
-    auto cur = root;
+    auto cur = root; // for travelsal
     while (cur->getIndexMap() && !cur->getIndexMap()->empty())
     {
+        // Accessing Data Nodes
         cur = cur->getMostLeftChild();
-        if (!cur)
-            cout << "Bptree Print ERROR~";
     }
-    while (cur != nullptr)
+    while (cur != nullptr) // cur is datanode
     {
         auto data = cur->getDataMap();
         if (data != nullptr && !data->empty())
         {
-            auto iter = data->begin();
+            auto iter = data->begin(); // for travelsal
             while (iter != data->end())
             {
                 auto info = iter->second;
+                // output
                 cout << info->getName() << "/" << info->getDeptNo() << "/" << info->getID() << info->getIncome() << endl;
-                ++iter;
+                ++iter; // travelsal in node
             }
         }
-        cur = cur->getNext();
+        cur = cur->getNext(); // travelsal
     }
 }

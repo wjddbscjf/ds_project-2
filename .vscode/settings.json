@@ -10,6 +10,8 @@
         "iosfwd": "cpp",
         "vector": "cpp",
         "algorithm": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "ios": "cpp",
+        "xiosbase": "cpp"
     }
 }
